@@ -57,15 +57,15 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 
 🛠 How It Works
 
-Waits for master device (e.g., MotoScan) to connect
+-Waits for master device (e.g., MotoScan) to connect
 
-Establishes outbound connection to slave device (e.g., OBD Adapter)
+-Establishes outbound connection to slave device (e.g., OBD Adapter)
 
-Relays traffic in both directions, with timestamped hex-dump logging
+-Relays traffic in both directions, with timestamped hex-dump logging
 
-Supports reconnecting and only accepts trusted master devices
+-Supports reconnecting and only accepts trusted master devices
 
-Can scan and manage Bluetooth trust relationships via bluetoothctl
+-Can scan and manage Bluetooth trust relationships via bluetoothctl
 
 📦 Project Structure
 
@@ -80,15 +80,15 @@ btpie-n-the-middle/
 
 🧭 Roadmap
 
-Socket timeouts for better stability
+-Socket timeouts for better stability
 
-Automatic reconnect logic for both master/slave sides
+-Automatic reconnect logic for both master/slave sides
 
-BLE support (future)
+-BLE support (future)
 
-Interactive device selector menu
+-Interactive device selector menu
 
-Enhanced logging with traffic summaries
+-Enhanced logging with traffic summaries
 
 📄 License
 
