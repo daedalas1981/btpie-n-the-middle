@@ -5,4 +5,3 @@ ignore_text = """__pycache__/
 logs/
 venv/
 .env
-"""
