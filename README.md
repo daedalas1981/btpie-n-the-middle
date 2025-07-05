@@ -24,4 +24,3 @@ pip install -r requirements.txt
 ## Notes
 - Designed for classic Bluetooth BR/EDR
 - BLE support may be added later
-"""
