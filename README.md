@@ -55,7 +55,7 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 | `--log`    | Log file path (default: `logs/session.log`)           |
 
 
-How It Works
+🛠 How It Works
 
 Waits for master device (e.g., MotoScan) to connect
 
