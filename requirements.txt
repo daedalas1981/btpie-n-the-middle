@@ -1,1 +1,1 @@
-requirements_text = """pybluez
+pybluez
