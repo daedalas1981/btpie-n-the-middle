@@ -29,7 +29,7 @@ pip install -r requirements.txt
 
 ---
 
-## 🚀 Usage Examples
+🚀 Usage Examples
 
 # Scan for nearby Bluetooth devices
 python3 scripts/btpie.py --scan
