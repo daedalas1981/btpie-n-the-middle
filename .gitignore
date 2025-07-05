@@ -1,9 +1,9 @@
-# Byte-compiled / cache files
+# Python bytecode
 __pycache__/
-*.py[cod]
-*.so
+*.pyc
+*.pyo
 
-# Logs and runtime files
+# Logs
 logs/
 *.log
 
@@ -11,13 +11,18 @@ logs/
 venv/
 .env
 
-# macOS files
+# macOS system files
 .DS_Store
 
-# VSCode config (if you use it)
+# Editor configs (optional, useful if using VSCode)
 .vscode/
 
-# Python egg info
+# Python packaging/build artifacts
 *.egg-info/
 dist/
 build/
+
+# Test coverage reports (future-proof)
+htmlcov/
+.coverage
+.cache/
