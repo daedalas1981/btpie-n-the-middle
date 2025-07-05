@@ -1,0 +1,8 @@
+# .gitignore
+ignore_text = """__pycache__/
+*.pyc
+*.log
+logs/
+venv/
+.env
+"""
