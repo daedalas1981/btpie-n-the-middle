@@ -1,4 +1,3 @@
-# setup.py
 setup_text = """from setuptools import setup, find_packages
 
 setup(
