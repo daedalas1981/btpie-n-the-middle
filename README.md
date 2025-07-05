@@ -1,5 +1,3 @@
-# README.md
-
 # BTPIE-N-THE-MIDDLE
 
 Modern Python 3 Bluetooth Proxy in the Middle tool for Raspberry Pi.
