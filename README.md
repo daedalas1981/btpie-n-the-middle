@@ -27,7 +27,6 @@ Install dependencies:
 ```bash
 pip install -r requirements.txt
 
----
 
 🚀 Usage Examples
 
@@ -43,9 +42,8 @@ python3 scripts/btpie.py --trust 00:04:3E:8F:AF:1F
 # Run the MITM relay with full logging
 python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --log logs/session.log
 
----
 
-## ⚙️ Arguments Table
+⚙️ Arguments Table
 
 | Flag       | Description                                           |
 | ---------- | ----------------------------------------------------- |
@@ -56,9 +54,9 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 | `--slave`  | MAC address of the target device (e.g., OBD Adapter)  |
 | `--log`    | Log file path (default: `logs/session.log`)           |
 
----
 
-## How It Works
+How It Works
+
 Waits for master device (e.g., MotoScan) to connect
 
 Establishes outbound connection to slave device (e.g., OBD Adapter)
@@ -69,9 +67,7 @@ Supports reconnecting and only accepts trusted master devices
 
 Can scan and manage Bluetooth trust relationships via bluetoothctl
 
----
-
-## 📦 Project Structure
+📦 Project Structure
 
 btpie-n-the-middle/
 ├── btpie/         # Core modules (MITM logic, adapter, logger)
@@ -82,9 +78,7 @@ btpie-n-the-middle/
 ├── setup.py
 ├── README.md
 
----
-
-## 🧭 Roadmap
+🧭 Roadmap
 
 Socket timeouts for better stability
 
@@ -96,13 +90,9 @@ Interactive device selector menu
 
 Enhanced logging with traffic summaries
 
----
-
-## 📄 License
+📄 License
 
 MIT License — see LICENSE file for full details.
-
----
 
 Built by Robert Cole as a clean, modern alternative to legacy btproxy tools.
 
