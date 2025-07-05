@@ -1,6 +1,23 @@
-ignore_text = """__pycache__/
-*.pyc
-*.log
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Logs and runtime files
 logs/
+*.log
+
+# Virtual environments
 venv/
 .env
+
+# macOS files
+.DS_Store
+
+# VSCode config (if you use it)
+.vscode/
+
+# Python egg info
+*.egg-info/
+dist/
+build/
