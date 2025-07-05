@@ -1,40 +1,40 @@
 import threading
 import time
-
 from btpie.logger import setup_logger
 from btpie.adapter import BluetoothAdapter
 
 class MITMCore:
-    def __init__(self, target_mac, log_file="logs/session.log"):
-        self.target_mac = target_mac
+    def __init__(self, master_mac, slave_mac, log_file="logs/session.log"):
+        self.master_mac = master_mac
+        self.slave_mac = slave_mac
         self.log_file = log_file
         self.logger = setup_logger(self.log_file)
-        self.adapter = BluetoothAdapter(self.target_mac)
+        self.adapter = BluetoothAdapter(master_mac, slave_mac)
         self.running = False
 
     def start(self):
         """Start the MITM relay"""
-        self.logger.info("[*] Starting MITM session")
+        self.logger.info(f"[*] Starting MITM session (Master: {self.master_mac}, Slave: {self.slave_mac})")
 
         try:
-            self.adapter.start_server()  # Wait for MotoScan (client) connection
-            self.adapter.connect_to_target()  # Connect to OBD (target)
+            self.adapter.start_server()      # Wait for master (MotoScan)
+            self.adapter.connect_to_slave()  # Connect to slave (OBD)
         except Exception as e:
-            self.logger.error(f"[!] Failed to establish connections: {e}")
+            self.logger.error(f"[!] Connection setup failed: {e}")
             return
 
         self.running = True
 
-        threading.Thread(target=self.relay, args=(self.adapter.conn_sock, self.adapter.client_sock, "MotoScan → OBD")).start()
-        threading.Thread(target=self.relay, args=(self.adapter.client_sock, self.adapter.conn_sock, "OBD → MotoScan")).start()
+        threading.Thread(target=self.relay, args=(self.adapter.conn_sock, self.adapter.client_sock, "Master → Slave")).start()
+        threading.Thread(target=self.relay, args=(self.adapter.client_sock, self.adapter.conn_sock, "Slave → Master")).start()
 
     def relay(self, source_sock, dest_sock, direction):
-        """Relay data between sockets, with logging"""
+        """Relay data with logging"""
         try:
             while self.running:
                 data = source_sock.recv(1024)
                 if not data:
-                    self.logger.warning(f"[!] Connection closed in {direction}")
+                    self.logger.warning(f"[!] Connection closed ({direction})")
                     self.running = False
                     break
 
@@ -47,7 +47,7 @@ class MITMCore:
         self.cleanup()
 
     def cleanup(self):
-        """Tear down all connections"""
+        """Close connections"""
         if self.running:
             self.running = False
             self.logger.info("[*] Cleaning up sockets")
