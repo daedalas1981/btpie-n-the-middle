@@ -4,12 +4,14 @@ from btpie.logger import setup_logger
 from btpie.adapter import BluetoothAdapter
 
 class MITMCore:
-    def __init__(self, master_mac, slave_mac, log_file="logs/session.log"):
+    def __init__(self, master_mac, slave_mac, log_file="logs/session.log", port=1, verbose=False):
         self.master_mac = master_mac
         self.slave_mac = slave_mac
         self.log_file = log_file
+        self.port = port
+        self.verbose = verbose
         self.logger = setup_logger(self.log_file)
-        self.adapter = BluetoothAdapter(master_mac, slave_mac)
+        self.adapter = BluetoothAdapter(master_mac, slave_mac, port=self.port)
         self.stop_event = threading.Event()
 
     def start(self):
@@ -17,7 +19,7 @@ class MITMCore:
             self.adapter.start_server()
 
             while not self.stop_event.is_set():
-                self.logger.info("[*] Waiting for master...")
+                self.logger.info(f"[*] Waiting for master on port {self.port}...")
                 self.adapter.wait_for_master()
 
                 if not self.adapter.connect_to_slave():
@@ -51,7 +53,10 @@ class MITMCore:
                     data = source_sock.recv(1024)
                     if not data:
                         break
-                    self.logger.info(f"[{direction}] {data.hex()}")
+                    hex_data = data.hex()
+                    if self.verbose:
+                        print(f"[{direction}] {hex_data}")
+                    self.logger.info(f"[{direction}] {hex_data}")
                     dest_sock.send(data)
                 except socket.timeout:
                     continue
