@@ -1,6 +1,10 @@
 btpie_script = """import argparse
 import time
-import bluetooth
+try:
+    import bluetooth
+except ImportError:
+    print("[!] pybluez not installed. Run: pip install pybluez")
+    exit(1)
 import os
 from btpie.core import MITMCore
 from btpie import __version__
@@ -18,10 +22,11 @@ def trust_device(mac):
 
 def main():
     parser = argparse.ArgumentParser(description="BTPIE-N-THE-MIDDLE")
-    parser.add_argument("--scan", action="store_true")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--scan", action="store_true", help="...")
     parser.add_argument("--paired", action="store_true")
     parser.add_argument("--trust")
-    parser.add_argument("--master")
+    group.add_argument("--master", help="...")
     parser.add_argument("--slave")
     parser.add_argument("--log", default="logs/session.log")
     parser.add_argument("--version", action="store_true")
