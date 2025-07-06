@@ -2,7 +2,7 @@
 
 **Modern Bluetooth Proxy-In-The-Middle (MITM) Tool for Raspberry Pi**
 
-Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing management, and modular design.
+Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing management, modular design, and interactive guided setup.
 
 ---
 
@@ -15,6 +15,7 @@ Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing 
 - Device scanning, pairing list, and trust management
 - Custom RFCOMM port option
 - Verbose console output option
+- Interactive step-by-step guided setup script
 - Modular, extensible, MIT License
 
 ---
@@ -54,6 +55,10 @@ python3 scripts/btpie.py --untrust 00:04:3E:8F:AF:1F
 ```bash
 python3 scripts/btpie.py --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --log logs/session.log --port 1 --verbose
 ```
+# Run interactive step-by-step setup
+```bash
+python3 scripts/interactive_btpie.py
+```
 
 ---
 
@@ -83,6 +88,7 @@ python3 scripts/btpie.py --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:A
 * Supports reconnecting and only accepts trusted master devices
 * Can scan and manage Bluetooth trust relationships via `bluetoothctl`
 * Optional custom port and verbose modes for advanced use
+* Step-by-step guided setup available for easier configuration
 
 ---
 
@@ -90,7 +96,7 @@ python3 scripts/btpie.py --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:A
 ```text
 btpie-n-the-middle/
 ├── btpie/         # Core modules (MITM logic, adapter, logger)
-├── scripts/       # CLI entry point
+├── scripts/       # CLI entry points, including interactive_btpie.py
 ├── tests/         # Unit tests (coming soon)
 ├── logs/          # Log files generated at runtime
 ├── requirements.txt
@@ -104,7 +110,7 @@ btpie-n-the-middle/
 * Socket timeouts for better stability (implemented)
 * Automatic reconnect logic for both master/slave sides (implemented)
 * BLE support (future)
-* Interactive device selector menu
+* Interactive device selector menu (partially implemented)
 * Enhanced logging with traffic summaries
 
 ---
