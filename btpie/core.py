@@ -1,4 +1,5 @@
 import threading
+import socket
 from btpie.logger import setup_logger
 from btpie.adapter import BluetoothAdapter
 
@@ -12,36 +13,48 @@ class MITMCore:
         self.stop_event = threading.Event()
 
     def start(self):
-        self.adapter.start_server()
+        try:
+            self.adapter.start_server()
 
-        while not self.stop_event.is_set():
-            self.logger.info("[*] Waiting for master...")
-            self.adapter.wait_for_master()
+            while not self.stop_event.is_set():
+                self.logger.info("[*] Waiting for master...")
+                self.adapter.wait_for_master()
 
-            if not self.adapter.connect_to_slave():
-                self.logger.error("[!] Failed to connect to slave")
-                break
+                if not self.adapter.connect_to_slave():
+                    self.logger.error("[!] Failed to connect to slave")
+                    break
 
-            t1 = threading.Thread(target=self.relay, args=(self.adapter.conn_sock, self.adapter.client_sock, "Master → Slave"))
-            t2 = threading.Thread(target=self.relay, args=(self.adapter.client_sock, self.adapter.conn_sock, "Slave → Master"))
-            t1.start()
-            t2.start()
-            t1.join()
-            t2.join()
+                self.adapter.conn_sock.settimeout(5.0)
+                self.adapter.client_sock.settimeout(5.0)
 
-            self.logger.warning("[!] Connection lost, restarting listener")
-            self.adapter.close()
+                t1 = threading.Thread(target=self.relay, args=(self.adapter.conn_sock, self.adapter.client_sock, "Master → Slave"))
+                t2 = threading.Thread(target=self.relay, args=(self.adapter.client_sock, self.adapter.conn_sock, "Slave → Master"))
+                t1.start()
+                t2.start()
+                t1.join()
+                t2.join()
+
+                self.logger.warning("[!] Connection lost, restarting listener")
+                self.adapter.close()
+
+                self.stop_event.clear()
+
+        except Exception as e:
+            self.logger.error(f"[!] Unexpected error in MITM core: {e}")
 
         self.cleanup()
 
     def relay(self, source_sock, dest_sock, direction):
         try:
             while not self.stop_event.is_set():
-                data = source_sock.recv(1024)
-                if not data:
-                    break
-                self.logger.info(f"[{direction}] {data.hex()}")
-                dest_sock.send(data)
+                try:
+                    data = source_sock.recv(1024)
+                    if not data:
+                        break
+                    self.logger.info(f"[{direction}] {data.hex()}")
+                    dest_sock.send(data)
+                except socket.timeout:
+                    continue
         except Exception as e:
             self.logger.error(f"[!] Relay error {direction}: {e}")
 
