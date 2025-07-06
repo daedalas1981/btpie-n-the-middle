@@ -1,10 +1,6 @@
-btpie_script = """import argparse
+import argparse
 import time
-try:
-    import bluetooth
-except ImportError:
-    print("[!] pybluez not installed. Run: pip install pybluez")
-    exit(1)
+import bluetooth
 import os
 from btpie.core import MITMCore
 from btpie import __version__
@@ -23,13 +19,16 @@ def trust_device(mac):
 def main():
     parser = argparse.ArgumentParser(description="BTPIE-N-THE-MIDDLE")
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--scan", action="store_true", help="...")
-    parser.add_argument("--paired", action="store_true")
-    parser.add_argument("--trust")
-    group.add_argument("--master", help="...")
-    parser.add_argument("--slave")
-    parser.add_argument("--log", default="logs/session.log")
-    parser.add_argument("--version", action="store_true")
+    group.add_argument("--scan", action="store_true", help="Scan for nearby Bluetooth devices")
+    group.add_argument("--paired", action="store_true", help="List trusted/paired devices")
+    group.add_argument("--trust", metavar="MAC", help="Trust a device by MAC address")
+    group.add_argument("--mitm", action="store_true", help="Run MITM relay between master and slave")
+
+    parser.add_argument("--master", help="Bluetooth MAC of connecting client (e.g., MotoScan)")
+    parser.add_argument("--slave", help="Bluetooth MAC of target device (e.g., OBD)")
+    parser.add_argument("--log", default="logs/session.log", help="Path to log file")
+    parser.add_argument("--version", action="store_true", help="Show tool version")
+
     args = parser.parse_args()
 
     if args.version:
@@ -48,18 +47,18 @@ def main():
         trust_device(args.trust)
         return
 
-    if not args.master or not args.slave:
-        parser.error("[!] --master and --slave are required for MITM operation")
+    if args.mitm:
+        if not args.master or not args.slave:
+            parser.error("[!] --master and --slave are required for MITM operation")
+        mitm = MITMCore(args.master, args.slave, args.log)
+        mitm.start()
 
-    mitm = MITMCore(args.master, args.slave, args.log)
-    mitm.start()
-
-    try:
-        while mitm.running:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        print("\n[!] CTRL+C received, shutting down...")
-        mitm.cleanup()
+        try:
+            while mitm.running:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("\n[!] CTRL+C received, shutting down...")
+            mitm.cleanup()
 
 if __name__ == "__main__":
     main()
