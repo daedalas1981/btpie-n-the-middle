@@ -81,6 +81,7 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 📦 Project Structure
 
 btpie-n-the-middle/
+
 ├── btpie/         # Core modules (MITM logic, adapter, logger)
 ├── scripts/       # CLI entry point
 ├── tests/         # Unit tests (coming soon)
