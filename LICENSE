@@ -19,7 +19,7 @@
 # ├ tests/
 # │   ├ test_core.py
 # │   └ test_adapter.py
-# ├ workflow/
+# ├ workflows/
 # │   ├ python-ci.yml
 
 # LICENSE (MIT)
