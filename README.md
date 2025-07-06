@@ -28,7 +28,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-
+---
 
 ## 🚀 Usage Examples
 
@@ -49,6 +49,8 @@ python3 scripts/btpie.py --trust 00:04:3E:8F:AF:1F
 python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --log logs/session.log
 ```
 
+---
+
 ## ⚙️ Arguments Table
 
 | Flag       | Description                                           |
@@ -60,6 +62,7 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 | `--slave`  | MAC address of the target device (e.g., OBD Adapter)  |
 | `--log`    | Log file path (default: `logs/session.log`)           |
 
+---
 
 ## 🛠 How It Works
 
@@ -73,6 +76,8 @@ python3 scripts/btpie.py --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --
 
 * Can scan and manage Bluetooth trust relationships via bluetoothctl
 
+---
+
 📦 Project Structure
 
 btpie-n-the-middle/
@@ -84,6 +89,8 @@ btpie-n-the-middle/
 ├── setup.py
 ├── README.md
 
+---
+
 🧭 Roadmap
 
 * Socket timeouts for better stability
@@ -94,12 +101,15 @@ btpie-n-the-middle/
 
 * Interactive device selector menu
 
-*Enhanced logging with traffic summaries
+* Enhanced logging with traffic summaries
+
+---
 
 ## 📄 License
 
 MIT License — see LICENSE file for full details.
 
+---
 Built by Robert Cole as a clean, modern alternative to legacy btproxy tools.
 
 
