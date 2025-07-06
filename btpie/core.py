@@ -1,3 +1,5 @@
+import threading
+
 core_text = """import threading
 from btpie.logger import setup_logger
 from btpie.adapter import BluetoothAdapter
@@ -10,9 +12,11 @@ class MITMCore:
         self.logger = setup_logger(self.log_file)
         self.adapter = BluetoothAdapter(master_mac, slave_mac)
         self.running = True
+        self.stop_event = threading.Event()
 
     def start(self):
         self.adapter.start_server()
+        while not self.stop_event.is_set():
 
         while self.running:
             self.logger.info("[*] Waiting for master...")
@@ -42,6 +46,7 @@ class MITMCore:
                     break
                 self.logger.info(f"[{direction}] {data.hex()}")
                 dest_sock.send(data)
+            while not self.stop_event.is_set():
         except Exception as e:
             self.logger.error(f"[!] Relay error {direction}: {e}")
 
