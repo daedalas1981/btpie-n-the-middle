@@ -109,16 +109,15 @@ btpie-n-the-middle/
 
 ---
 
+## 🔗 Related Projects
+
+This project was inspired by the concept of Bluetooth Proxy-in-the-Middle tools like [btproxy by conorpp](https://github.com/conorpp/btproxy), but was built entirely from scratch in Python 3 with modern design, improved stability, and added features.
+
+---
+
 ## 📄 License
 
 MIT License — see LICENSE file for full details.
 
 ---
 Built by Robert Cole as a clean, modern alternative to legacy btproxy tools.
-
----
-
-## 🔗 Related Projects
-
-This project was inspired by the concept of Bluetooth Proxy-in-the-Middle tools like [btproxy](https://github.com/andrewmichaelsmith/btproxy), but was built entirely from scratch in Python 3 with modern design, improved stability, and added features.
-
