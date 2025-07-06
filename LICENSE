@@ -20,7 +20,7 @@
 # │   ├ test_core.py
 # │   └ test_adapter.py
 # ├ workflow/
-# │   ├ .yaaml
+# │   ├ python-ci.yml
 
 # LICENSE (MIT)
 license_text = """MIT License
