@@ -16,9 +16,11 @@
 # │   └ utils.py
 # ├ scripts/
 # │   └ btpie.py
-# └ tests/
-#     ├ test_core.py
-#     └ test_adapter.py
+# ├ tests/
+# │   ├ test_core.py
+# │   └ test_adapter.py
+# ├ workflow/
+# │   ├ .yaaml
 
 # LICENSE (MIT)
 license_text = """MIT License
