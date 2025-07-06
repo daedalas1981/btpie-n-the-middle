@@ -1,6 +1,4 @@
 import threading
-
-core_text = """import threading
 from btpie.logger import setup_logger
 from btpie.adapter import BluetoothAdapter
 
@@ -11,14 +9,12 @@ class MITMCore:
         self.log_file = log_file
         self.logger = setup_logger(self.log_file)
         self.adapter = BluetoothAdapter(master_mac, slave_mac)
-        self.running = True
         self.stop_event = threading.Event()
 
     def start(self):
         self.adapter.start_server()
-        while not self.stop_event.is_set():
 
-        while self.running:
+        while not self.stop_event.is_set():
             self.logger.info("[*] Waiting for master...")
             self.adapter.wait_for_master()
 
@@ -40,16 +36,16 @@ class MITMCore:
 
     def relay(self, source_sock, dest_sock, direction):
         try:
-            while True:
+            while not self.stop_event.is_set():
                 data = source_sock.recv(1024)
                 if not data:
                     break
                 self.logger.info(f"[{direction}] {data.hex()}")
                 dest_sock.send(data)
-            while not self.stop_event.is_set():
         except Exception as e:
             self.logger.error(f"[!] Relay error {direction}: {e}")
 
     def cleanup(self):
         self.logger.info("[*] Cleaning up sockets")
         self.adapter.close()
+        self.stop_event.set()
