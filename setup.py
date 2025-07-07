@@ -1,3 +1,5 @@
+# MIT License - Copyright (c) 2025 Robert Cole
+
 setup_text = """from setuptools import setup, find_packages
 
 setup(
