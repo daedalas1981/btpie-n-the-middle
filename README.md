@@ -2,19 +2,21 @@
 
 **Modern Bluetooth Proxy-In-The-Middle (MITM) Tool for Raspberry Pi**
 
-Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing management, modular design, and interactive guided setup.
+Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing management, modular design, interactive guided setup, and improved robustness for Raspberry Pi OS.
 
 ---
 
 ## 🔥 Features
 
 - Written from scratch in Python 3.x
-- Compatible with latest Raspberry Pi 64-bit OS
+- Compatible with latest Raspberry Pi 64-bit OS (Full and Lite)
 - Classic Bluetooth (RFCOMM) relay between devices
 - Full bidirectional hex-dump logging
 - Device scanning, pairing list, and trust management
+- Prevents duplicate Master/Slave device assignment
 - Custom RFCOMM port option
 - Verbose console output option
+- Bluetooth auto-enablement failsafe
 - Interactive step-by-step guided setup script
 - Modular, extensible, MIT License
 
@@ -22,13 +24,15 @@ Clean Python 3.x MITM relay with full two-way logging, device scanning, pairing 
 
 ## ⚙️ Requirements
 
+- Raspberry Pi OS 64-bit (Bookworm or newer)
 - Python 3.9+ recommended
-- `pybluez` library
+- `pybluez` library (install via apt)
 
-Install dependencies:
+Install system dependencies:
 
 ```bash
-pip install -r requirements.txt
+sudo apt update
+sudo apt install python3 python3-pip python3-pybluez bluetooth pi-bluetooth
 ```
 
 ---
@@ -37,27 +41,27 @@ pip install -r requirements.txt
 
 # Scan for nearby Bluetooth devices
 ```bash
-python3 scripts/btpie.py --scan
+python3 -m scripts.btpie --scan
 ```
 # List paired/trusted devices
 ```bash
-python3 scripts/btpie.py --paired
+python3 -m scripts.btpie --paired
 ```
 # Trust a Bluetooth device by MAC address
 ```bash
-python3 scripts/btpie.py --trust 00:04:3E:8F:AF:1F
+python3 -m scripts.btpie --trust 00:04:3E:8F:AF:1F
 ```
 # Untrust/remove trust for a device
 ```bash
-python3 scripts/btpie.py --untrust 00:04:3E:8F:AF:1F
+python3 -m scripts.btpie --untrust 00:04:3E:8F:AF:1F
 ```
 # Run the MITM relay with full logging
 ```bash
-python3 scripts/btpie.py --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --log logs/session.log --port 1 --verbose
+python3 -m scripts.btpie --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:AF:3F --log logs/session.log --port 1 --verbose
 ```
 # Run interactive step-by-step setup
 ```bash
-python3 scripts/interactive_btpie.py
+python3 -m scripts.interactive_btpie
 ```
 
 ---
@@ -82,9 +86,11 @@ python3 scripts/interactive_btpie.py
 
 ## 🛠 How It Works
 
+* Ensures Bluetooth is powered on automatically
 * Waits for master device (e.g., MotoScan) to connect
 * Establishes outbound connection to slave device (e.g., OBD Adapter)
 * Relays traffic in both directions, with timestamped hex-dump logging
+* Prevents identical Master and Slave assignments (with override)
 * Supports reconnecting and only accepts trusted master devices
 * Can scan and manage Bluetooth trust relationships via `bluetoothctl`
 * Optional custom port and verbose modes for advanced use
@@ -109,9 +115,11 @@ btpie-n-the-middle/
 
 * Socket timeouts for better stability (implemented)
 * Automatic reconnect logic for both master/slave sides (implemented)
-* BLE support (future)
-* Interactive device selector menu (partially implemented)
+* Interactive device selector menu (implemented)
+* Prevent duplicate device assignment (implemented)
 * Enhanced logging with traffic summaries
+* BLE support (future)
+* `.deb` installer for simplified Pi deployment (future)
 
 ---
 
