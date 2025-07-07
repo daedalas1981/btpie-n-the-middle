@@ -1,3 +1,5 @@
+# MIT License - Copyright (c) 2025 Robert Cole
+
 import argparse
 import time
 import subprocess
