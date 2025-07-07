@@ -24,22 +24,6 @@ From the project root:
 pytest tests/
 ```
 
-## 🧪 Coverage Reporting (Optional)
-
-To see how much of the codebase is exercised by the tests:
-
-```bash
-pip install pytest-cov
-pytest --cov=btpie tests/
-```
-
-Generate a detailed HTML report:
-
-```bash
-pytest --cov=btpie --cov-report=html tests/
-xdg-open htmlcov/index.html
-```
-
 ## ✅ Notes
 
 - Uses `unittest.mock` to isolate dependencies
