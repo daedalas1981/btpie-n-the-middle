@@ -1,3 +1,5 @@
+# MIT License - Copyright (c) 2025 Robert Cole
+
 """
 BTPIE-N-THE-MIDDLE
 
