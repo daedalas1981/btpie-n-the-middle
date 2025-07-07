@@ -1,3 +1,5 @@
+# MIT License - Copyright (c) 2025 Robert Cole
+
 """
 Utility functions for BTPIE-N-THE-MIDDLE
 """
