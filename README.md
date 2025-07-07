@@ -63,6 +63,10 @@ python3 -m scripts.btpie --mitm --master 00:04:3E:8F:AF:1F --slave 00:02:1E:8F:A
 ```bash
 python3 -m scripts.interactive_btpie
 ```
+# Check Bluetooth status before scanning
+```bash
+bluetoothctl show
+```
 
 ---
 
@@ -90,7 +94,7 @@ python3 -m scripts.interactive_btpie
 * Waits for master device (e.g., MotoScan) to connect
 * Establishes outbound connection to slave device (e.g., OBD Adapter)
 * Relays traffic in both directions, with timestamped hex-dump logging
-* Prevents identical Master and Slave assignments (with override)
+* Prevents identical Master and Slave assignments with user confirmation prompt
 * Supports reconnecting and only accepts trusted master devices
 * Can scan and manage Bluetooth trust relationships via `bluetoothctl`
 * Optional custom port and verbose modes for advanced use
@@ -103,7 +107,7 @@ python3 -m scripts.interactive_btpie
 btpie-n-the-middle/
 ├── btpie/         # Core modules (MITM logic, adapter, logger)
 ├── scripts/       # CLI entry points, including interactive_btpie.py
-├── tests/         # Unit tests (coming soon)
+├── tests/         # Unit tests for core components
 ├── logs/          # Log files generated at runtime
 ├── requirements.txt
 ├── setup.py
@@ -120,6 +124,7 @@ btpie-n-the-middle/
 * Enhanced logging with traffic summaries
 * BLE support (future)
 * `.deb` installer for simplified Pi deployment (future)
+* Unit tests for adapter, core, utilities (in progress)
 
 ---
 
