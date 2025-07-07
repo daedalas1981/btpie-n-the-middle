@@ -1,3 +1,2 @@
-pybluez>=0.23
 flake8>=6.0
 pytest>=7.0
