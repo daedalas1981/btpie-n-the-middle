@@ -1,25 +1,31 @@
-"""
-Basic unit tests for btpie.core
-"""
-
-import unittest
+import pytest
 from btpie.core import MITMCore
 
-class TestMITMCore(unittest.TestCase):
-    
-    def test_initialization(self):
-        master_mac = "00:04:3E:8F:AF:1F"
-        slave_mac = "00:02:1E:8F:AF:3F"
-        log_file = "logs/test.log"
+def test_mitmcore_initialization():
+    mitm = MITMCore(
+        master_mac="00:11:22:33:44:55",
+        slave_mac="AA:BB:CC:DD:EE:FF",
+        log_file="logs/test.log",
+        port=5,
+        verbose=True
+    )
 
-        mitm = MITMCore(master_mac, slave_mac, log_file)
+    assert mitm.master_mac == "00:11:22:33:44:55"
+    assert mitm.slave_mac == "AA:BB:CC:DD:EE:FF"
+    assert mitm.log_file == "logs/test.log"
+    assert mitm.port == 5
+    assert mitm.verbose is True
+    assert mitm.adapter.master_mac == "00:11:22:33:44:55"
+    assert mitm.adapter.slave_mac == "AA:BB:CC:DD:EE:FF"
+    assert mitm.adapter.port == 5
+    assert mitm.stop_event.is_set() is False
 
-        self.assertEqual(mitm.master_mac, master_mac)
-        self.assertEqual(mitm.slave_mac, slave_mac)
-        self.assertEqual(mitm.log_file, log_file)
-        self.assertTrue(hasattr(mitm, "adapter"))
-        self.assertTrue(hasattr(mitm, "logger"))
-        self.assertTrue(hasattr(mitm, "running"))
+def test_mitmcore_cleanup_sets_stop():
+    mitm = MITMCore(
+        master_mac="11:22:33:44:55:66",
+        slave_mac="77:88:99:AA:BB:CC"
+    )
 
-if __name__ == "__main__":
-    unittest.main()
+    mitm.cleanup()
+
+    assert mitm.stop_event.is_set() is True
