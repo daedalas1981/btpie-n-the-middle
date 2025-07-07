@@ -1,3 +1,5 @@
+# MIT License - Copyright (c) 2025 Robert Cole
+
 adapter_text = """import bluetooth
 import time
 
