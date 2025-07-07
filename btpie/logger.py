@@ -1,23 +1,23 @@
 # MIT License - Copyright (c) 2025 Robert Cole
 
-import logging
 import os
+from datetime import datetime
 
-def setup_logger(logfile):
-    os.makedirs(os.path.dirname(logfile), exist_ok=True)
-    
-    logger = logging.getLogger("btpie")
-    logger.setLevel(logging.DEBUG)
+class Logger:
+    def __init__(self, log_file="logs/session.log"):
+        self.log_file = log_file
+        # Ensure the log directory exists
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
 
-    formatter = logging.Formatter('%(asctime)s [%(levelname)s] %(message)s')
+        # Clear log on startup
+        with open(self.log_file, "w") as f:
+            f.write(f"[{self.timestamp()}] Logger initialized.\n")
 
-    file_handler = logging.FileHandler(logfile)
-    file_handler.setFormatter(formatter)
+    def timestamp(self):
+        return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(formatter)
-
-    logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
-
-    return logger
+    def log(self, direction, data):
+        formatted = " ".join(f"{byte:02X}" for byte in data)
+        entry = f"[{self.timestamp()}] {direction}: {formatted}\n"
+        with open(self.log_file, "a") as f:
+            f.write(entry)
