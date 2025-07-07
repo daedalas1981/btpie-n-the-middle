@@ -1,23 +1,30 @@
-"""
-Basic unit tests for btpie.adapter
-"""
-
-import unittest
+import pytest
 from btpie.adapter import BluetoothAdapter
 
-class TestBluetoothAdapter(unittest.TestCase):
+def test_adapter_initialization():
+    adapter = BluetoothAdapter(master_mac="00:11:22:33:44:55", slave_mac="AA:BB:CC:DD:EE:FF", port=3)
     
-    def test_initialization(self):
-        master_mac = "00:04:3E:8F:AF:1F"
-        slave_mac = "00:02:1E:8F:AF:3F"
-        adapter = BluetoothAdapter(master_mac, slave_mac)
-        
-        self.assertEqual(adapter.master_mac, master_mac)
-        self.assertEqual(adapter.slave_mac, slave_mac)
-        self.assertEqual(adapter.port, 1)
-        self.assertIsNone(adapter.client_sock)
-        self.assertIsNone(adapter.server_sock)
-        self.assertIsNone(adapter.conn_sock)
+    assert adapter.master_mac == "00:11:22:33:44:55"
+    assert adapter.slave_mac == "AA:BB:CC:DD:EE:FF"
+    assert adapter.port == 3
+    assert adapter.server_sock is None
+    assert adapter.client_sock is None
+    assert adapter.conn_sock is None
 
-if __name__ == "__main__":
-    unittest.main()
+def test_adapter_default_port():
+    adapter = BluetoothAdapter(master_mac="11:22:33:44:55:66", slave_mac="77:88:99:AA:BB:CC")
+    
+    assert adapter.port == 1
+
+def test_adapter_reset_sockets():
+    adapter = BluetoothAdapter(master_mac="11:22:33:44:55:66", slave_mac="77:88:99:AA:BB:CC")
+    
+    adapter.server_sock = "dummy"
+    adapter.client_sock = "dummy"
+    adapter.conn_sock = "dummy"
+    
+    adapter.close()
+    
+    assert adapter.server_sock is None
+    assert adapter.client_sock is None
+    assert adapter.conn_sock is None
