@@ -3,7 +3,7 @@
 import sys
 import pytest
 from unittest import mock
-from btpie.core import MITMCore
+from btpie import MITMCore
 
 def test_version_flag(capsys):
     test_args = ["btpie.py", "--version"]
