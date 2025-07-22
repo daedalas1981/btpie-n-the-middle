@@ -2,6 +2,6 @@
 
 # btpie/__init__.py
 
-from .core import MITMCore
+from btpie.core import MITMCore
 
 __all__ = ["MITMCore"]
