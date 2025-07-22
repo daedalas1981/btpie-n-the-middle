@@ -1,6 +1,7 @@
 # MIT License - Copyright (c) 2025 Robert Cole
 
 from btpie import utils
+from datetime import datetime
 
 def test_hex_dump():
     data = b'\x01\x02\xAA\xFF'
@@ -13,7 +14,11 @@ def test_hex_dump():
 def test_timestamp_format():
     ts = utils.timestamp()
     
-    assert isinstance(ts, str)
-    assert len(ts) >= 19  # Format: YYYY-MM-DD HH:MM:SS
-    assert ts.count(":") == 2
-    assert ts.count("-") == 2
+    # Validate structure using datetime
+    try:
+        datetime.strptime(ts, "%Y-%m-%d %H:%M:%S")
+        valid = True
+    except ValueError:
+        valid = False
+
+    assert valid, "Timestamp is not in expected format YYYY-MM-DD HH:MM:SS"
