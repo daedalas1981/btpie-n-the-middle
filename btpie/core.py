@@ -69,3 +69,17 @@ class MITMCore:
         self.logger.info("[*] Cleaning up sockets")
         self.adapter.close()
         self.stop_event.set()
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Bluetooth MITM Proxy")
+    parser.add_argument("--master", required=True, help="MAC address of master device")
+    parser.add_argument("--slave", required=True, help="MAC address of slave device")
+    parser.add_argument("--log", default="logs/session.log", help="Log file path")
+    parser.add_argument("--port", type=int, default=1, help="RFCOMM port")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose hex output")
+    args = parser.parse_args()
+
+    mitm = MITMCore(args.master, args.slave, log_file=args.log, port=args.port, verbose=args.verbose)
+    mitm.start()
