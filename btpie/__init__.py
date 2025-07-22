@@ -9,3 +9,9 @@ Package initialization.
 """
 
 __version__ = "0.1.0"
+
+# btpie/__init__.py
+
+from .core import MITMCore
+
+__all__ = ["MITMCore"]
