@@ -2,6 +2,7 @@
 
 import pytest
 from btpie.core import MITMCore
+from btpie import main
 
 def test_mitmcore_initialization():
     mitm = MITMCore(
