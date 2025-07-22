@@ -10,7 +10,11 @@ def test_logger_initialization(tmp_path):
 
     assert logger is not None
     logger.info("Test log message")
+
     assert log_file.exists()
+    with open(log_file, "r") as f:
+        contents = f.read()
+        assert "Test log message" in contents
 
 def test_logger_multiple_messages(tmp_path):
     """Test logger writes multiple lines to file."""
@@ -22,5 +26,7 @@ def test_logger_multiple_messages(tmp_path):
 
     with open(log_file, "r") as f:
         contents = f.read()
+        lines = contents.strip().split("\n")
         assert "First message" in contents
         assert "Second message" in contents
+        assert len(lines) >= 2
