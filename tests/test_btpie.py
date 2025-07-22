@@ -36,4 +36,4 @@ def test_missing_mitm_args(capsys):
     captured = capsys.readouterr()
     assert "Error: --master and --slave required with --mitm" in captured.out
 
-def test_log_flag
+def test_log_flag():
